@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Калькулятор расходов</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Мои расходы</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="form">
+            <select name="category" required>
+                <option value="">Выберите категорию</option>
+                <option value="Еда">Еда</option>
+                <option value="Транспорт">Транспорт</option>
+                <option value="Развлечения">Развлечения</option>
+                <option value="Прочее">Прочее</option>
+            </select>
+            <input type="number" name="amount" placeholder="Сумма" step="0.01" required>
+            <button type="submit">Добавить</button>
+        </form>
+
+        <div class="summary">
+            <h2>Итого: {{ "%.2f"|format(total) }} ₽</h2>
+            <div class="actions">
+                <a href="{{ url_for('stats') }}" class="stats-btn">Статистика</a>
+                <a href="{{ url_for('clear') }}" class="clear-btn" onclick="return confirm('Очистить все данные?')">Очистить</a>
+            </div>
+        </div>
+
+        {% if expenses %}
+        <h3>Последние расходы:</h3>
+        <ul class="expenses">
+            {% for exp in expenses %}
+            <li>
+                {{ exp.category }}: {{ "%.2f"|format(exp.amount) }} ₽
+                <small>{{ exp.date }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.total-stats { background: #e7f3ff; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 30px; }
+.no-data { text-align: center; color: #666; padding: 40px; }
+.stats-list li { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #f8f9fa; margin-bottom: 15px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.category-info { display: flex; flex-direction: column; gap: 4px; }
+.category { font-size: 18px; font-weight: 600; color: #333; }
+.percent { color: #666; font-size: 14px; }
+.amount-info { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.amount { font-size: 20px; font-weight: bold; color: #007bff; }
+.progress-bar { width: 150px; height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #28a745, #20c997); border-radius: 4px; transition: width 0.3s ease; }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статистика расходов</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Статистика по категориям</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if categories %}
+        <div class="total-stats">
+            <h2>Общая сумма: {{ "%.2f"|format(total) }} ₽</h2>
+        </div>
+
+        <ul class="stats-list">
+            {% for category, amount in categories.items() %}
+            {% set total_all = total %}
+            {% set percent = (amount / total_all * 100) if total_all > 0 else 0 %}
+            <li>
+                <div class="category-info">
+                    <span class="category">{{ category }}</span>
+                    <span class="percent">{{ "%.1f"|format(percent) }}%</span>
+                </div>
+                <div class="amount-info">
+                    <span class="amount">{{ "%.2f"|format(amount) }} ₽</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ percent }}%"></div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="no-data">
+            <p>Нет данных для статистики. Добавьте расходы на главной странице</p>
+        </div>
+        {% endif %}
+
+        <div class="actions">
+            <a href="{{ url_for('index') }}" class="back-btn">На главную</a>
+        </div>
+    </div>
+</head>
+</body>
+</html>
